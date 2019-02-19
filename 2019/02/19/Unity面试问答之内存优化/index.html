@@ -4,25 +4,25 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
   
-    <title>LuaFramework笔记One | Game Program</title>
+    <title>Unity面试问答之内存优化 | Game Program</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="zdhgamer">
     
 
     
-    <meta name="description" content="AppConstAppConst.DebugMode 当AppConst.DebugMode=true时1.1 获取的本地持久化资源目录为return Application.dataPath + &amp;quot;/&amp;quot; + AppConst.AssetDir + &amp;quot;/&amp;quot;;在LuaFramework框架中这个路径为Assets/StreamingAssets目录，也就是说读">
+    <meta name="description" content="内存优化 资源优化1.1 ab包在完全没有引用的时候，AssetBound.Unload(true)，这样会把资源全部在内存中卸载掉，有引用该资源的地方也会被卸载掉。1.2 Resources加载的时候，在资源使用完毕之后，需要把资源Resources.UnloadAsset();卸载非 GameObject类型的资源，会将内存中已加载资源及其克隆体卸载。 Resources.UnloadUnus">
 <meta name="keywords" content="Unity ShaderLab Egret Lua C#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LuaFramework笔记One">
-<meta property="og:url" content="http://zdhgamer.github.io/2019/01/17/LuaFramework笔记One/index.html">
+<meta property="og:title" content="Unity面试问答之内存优化">
+<meta property="og:url" content="http://zdhgamer.github.io/2019/02/19/Unity面试问答之内存优化/index.html">
 <meta property="og:site_name" content="Game Program">
-<meta property="og:description" content="AppConstAppConst.DebugMode 当AppConst.DebugMode=true时1.1 获取的本地持久化资源目录为return Application.dataPath + &amp;quot;/&amp;quot; + AppConst.AssetDir + &amp;quot;/&amp;quot;;在LuaFramework框架中这个路径为Assets/StreamingAssets目录，也就是说读">
+<meta property="og:description" content="内存优化 资源优化1.1 ab包在完全没有引用的时候，AssetBound.Unload(true)，这样会把资源全部在内存中卸载掉，有引用该资源的地方也会被卸载掉。1.2 Resources加载的时候，在资源使用完毕之后，需要把资源Resources.UnloadAsset();卸载非 GameObject类型的资源，会将内存中已加载资源及其克隆体卸载。 Resources.UnloadUnus">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-17T06:54:01.992Z">
+<meta property="og:updated_time" content="2019-02-19T13:22:59.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LuaFramework笔记One">
-<meta name="twitter:description" content="AppConstAppConst.DebugMode 当AppConst.DebugMode=true时1.1 获取的本地持久化资源目录为return Application.dataPath + &amp;quot;/&amp;quot; + AppConst.AssetDir + &amp;quot;/&amp;quot;;在LuaFramework框架中这个路径为Assets/StreamingAssets目录，也就是说读">
+<meta name="twitter:title" content="Unity面试问答之内存优化">
+<meta name="twitter:description" content="内存优化 资源优化1.1 ab包在完全没有引用的时候，AssetBound.Unload(true)，这样会把资源全部在内存中卸载掉，有引用该资源的地方也会被卸载掉。1.2 Resources加载的时候，在资源使用完毕之后，需要把资源Resources.UnloadAsset();卸载非 GameObject类型的资源，会将内存中已加载资源及其克隆体卸载。 Resources.UnloadUnus">
 
     
     <link rel="alternative" href="/atom.xml" title="Game Program" type="application/atom+xml">
@@ -82,14 +82,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2019/01/17/LuaFramework笔记One/" title="LuaFramework笔记One" itemprop="url">LuaFramework笔记One</a>
+      <a href="/2019/02/19/Unity面试问答之内存优化/" title="Unity面试问答之内存优化" itemprop="url">Unity面试问答之内存优化</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="zdhgamer" target="_blank" itemprop="author">zdhgamer</a>
 		
   </p><p class="article-time">
-    <time datetime="2019-01-17T06:53:57.000Z" itemprop="datePublished"> Published 2019-01-17</time>
+    <time datetime="2019-02-19T13:22:57.000Z" itemprop="datePublished"> Published 2019-02-19</time>
     
   </p>
 </header>
@@ -98,30 +98,14 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AppConst"><span class="toc-number">1.</span> <span class="toc-text">AppConst</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-DebugMode"><span class="toc-number">1.1.</span> <span class="toc-text">AppConst.DebugMode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-UpdateMode"><span class="toc-number">1.2.</span> <span class="toc-text">AppConst.UpdateMode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-LuaBundleMode"><span class="toc-number">1.3.</span> <span class="toc-text">AppConst.LuaBundleMode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-AppName"><span class="toc-number">1.4.</span> <span class="toc-text">AppConst.AppName</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-DebugMode-和-AppConst-LuaBundleMode-的合作"><span class="toc-number">1.5.</span> <span class="toc-text">AppConst.DebugMode 和 AppConst.LuaBundleMode 的合作</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内存优化"><span class="toc-number">1.</span> <span class="toc-text">内存优化</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="AppConst"><a href="#AppConst" class="headerlink" title="AppConst"></a>AppConst</h1><h2 id="AppConst-DebugMode"><a href="#AppConst-DebugMode" class="headerlink" title="AppConst.DebugMode"></a>AppConst.DebugMode</h2><ol>
-<li>当AppConst.DebugMode=true时<br>1.1 获取的本地持久化资源目录为<br><code>return Application.dataPath + &quot;/&quot; + AppConst.AssetDir + &quot;/&quot;;</code><br>在LuaFramework框架中这个路径为Assets/StreamingAssets目录，也就是说读取的ab资源是Assets/StreamingAssets下面的ab资源；<br>1.2 不会进行StreamingAssets下面资源的解压释放，但是会执行更新逻辑<br>1.3 lua引擎所初始化的搜索路劲为Assets/{AppName}/Lua和Assets/{AppName}/ToLua/Lua</li>
-<li>当AppConst.DebugMode=false时<br>2.1 获取的本地持久化资源目录为当前系统的持久化目录<br>2.2 会根据是否解压释放过，进行Asset/StreamingAssets下面的ab资源的释放<br>2.3 lua引擎所初始化的搜索路劲为本地持久化目录下面的Lua文件夹</li>
-</ol>
-<h2 id="AppConst-UpdateMode"><a href="#AppConst-UpdateMode" class="headerlink" title="AppConst.UpdateMode"></a>AppConst.UpdateMode</h2><p>当AppConst.UpdateMode=false时，框架不会进行资源的更新下载</p>
-<h2 id="AppConst-LuaBundleMode"><a href="#AppConst-LuaBundleMode" class="headerlink" title="AppConst.LuaBundleMode"></a>AppConst.LuaBundleMode</h2><p>当AppConst.LuaBundleMode为true时：</p>
-<ol>
-<li>会将.lua文件打包进ab：<br>打包lua文件流程：先创建Assets/Lua文件夹，然后遍历Assets/{AppName}/Lua/和Assets/{AppName}/ToLua/Lua这两个文件夹；<br>1.1 当AppConst.LuaByteMode为true时，先将文件夹下面的所有.lua文件遍历出来，然后执行EncodeLuaFile(files[j], dest)函数：将非.lua文件直接copy到Assets/Lua下面的相应文件夹下面，将.lua文件进行luajit加密，然后copy到Assets/Lua下面的相应文件夹下面。<br>1.2 当AppConst.LuaByteMode为false时,直接将文件加上.bytes后缀，copy到Assets/Lua下面的相应文件夹下面。<br>1.3 所有Assets/Lua目录下面的所有文件夹路径，然后获取到ab包的名字（规则是lua/lua_{文件夹文字}.{AppConst.ExtName}）;然后将Assets/Lua/下面的每一个文件夹作为一个ab包，加入要打包的map中。<br>1.4 最后将Assets/Lua下面的所有.bytes文件加入要打包的map中，名字为lua/lua.{AppConst.ExtName}<br>1.5 最终，将Assets/{AppName}/Lua/和Assets/{AppName}/ToLua/Lua这两个文件夹下面的所有非.lua文件直接copy到Assets/StreamingAssets/lua/目录下面</li>
-<li>LuaLoader对象中的 beZip = AppConst.LuaBundleMode，这样，LuaManager中InitLuaBundle()函数会将打包的加入lua引擎的搜索目录</li>
-</ol>
-<p>当AppConst.LuaBundleMode为false时：</p>
-<ol>
-<li>直接copyAssets/{AppName}/Lua/和Assets/{AppName}/ToLua/Lua这两个文件夹下面的文件到Assets/StreamingAssets/lua/下面</li>
-</ol>
-<h2 id="AppConst-AppName"><a href="#AppConst-AppName" class="headerlink" title="AppConst.AppName"></a>AppConst.AppName</h2><p>决定Lua的打包和搜索目录</p>
-<h2 id="AppConst-DebugMode-和-AppConst-LuaBundleMode-的合作"><a href="#AppConst-DebugMode-和-AppConst-LuaBundleMode-的合作" class="headerlink" title="AppConst.DebugMode 和 AppConst.LuaBundleMode 的合作"></a>AppConst.DebugMode 和 AppConst.LuaBundleMode 的合作</h2><ol>
-<li>AppConst.DebugMode为true和AppConst.LuaBundleMode为true：<br>打包时：lua文件会被打包进入ab。<br>运行时：ab包中的lua文件会被加入lua引擎搜索目录。程序不会进行解压资源。读取的lua文件是ab包中的lua文件，如果ab包不存在就会报错</li>
-<li>AppConst.DebugMode为true和AppConst.LuaBundleMode为false：<br>打包时：lua文件不会被打包进入ab。<br>运行时：ab包中的lua文件不会被加入lua引擎搜索目录。程序不会进行解压资源。读取的lua文件是Assets/{AppName}/Lua/和Assets/{AppName}/ToLua/Lua这两个文件夹下面的文件</li>
-<li>AppConst.DebugMode为false时，会进行资源解压，其他照旧。</li>
-<li>总结 ：<br>开发时，AppConst.DebugMode为true和AppConst.LuaBundleMode为false；</li>
+		<h1 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h1><ol>
+<li>资源优化<br>1.1 ab包在完全没有引用的时候，AssetBound.Unload(true)，这样会把资源全部在内存中卸载掉，有引用该资源的地方也会被卸载掉。<br>1.2 Resources加载的时候，在资源使用完毕之后，需要把资源Resources.UnloadAsset();卸载非 GameObject类型的资源，会将内存中已加载资源及其克隆体卸载。 Resources.UnloadUnusedAssets(),这是一个异步操作，会卸载掉内存中和加载出来的没有使用的资源。<br>1.3 贴图资源打包图集最大为1024*1024，图集打包合理一些。<br>1.4 纹理和图集的压缩格式。比如Android平台的ETC2、iOS平台的PVRTC、Windows PC上的DXT等等。<br>1.4 图集和纹理尽量不开MinMap，在没有特殊需求下，也不要开启Read/Write Enable,<br>1.5 打包ab的时候，去除冗余资源。</li>
+<li>代码优化<br>2.1 缓存获取到的组件，不要频繁的GetComponent，在Unity的API中返回数组和集合的情况，也要缓存起来，这样能减少GC和内存。<br>2.2 使用对象池。<br>2.3 不要频繁的new 对象和数组。<br>2.4 log日志输出也会占用大量内存。<br>2.5 string拼接多用stringBuilder<br>2.6 避免ui网格重建，动静分离；NGUI是分离到不同的UIPanel下，UGUI是分离到不同的Canvas下。<br>2.7 缓存获取到的主相机</li>
+<li>手动GC<br>3.1 在场景加载完之后手动调用一次GC.Collect()</li>
 </ol>
   
 	</div>
@@ -135,7 +119,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://zdhgamer.github.io/2019/01/17/LuaFramework笔记One/" data-title="LuaFramework笔记One | Game Program" data-tsina="" class="share clearfix">
+	  <div data-url="http://zdhgamer.github.io/2019/02/19/Unity面试问答之内存优化/" data-title="Unity面试问答之内存优化 | Game Program" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -148,19 +132,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev">
- <a href="/2019/02/19/Unity面试问答之内存优化/" title="Unity面试问答之内存优化">
-  <strong>上一篇：</strong><br>
-  <span>
-  Unity面试问答之内存优化</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/10/28/hello-world-1/" title="hello world">
+<a href="/2019/01/17/LuaFramework笔记One/" title="LuaFramework笔记One">
  <strong>下一篇：</strong><br> 
- <span>hello world
+ <span>LuaFramework笔记One
 </span>
 </a>
 </div>
@@ -177,7 +153,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#AppConst"><span class="toc-number">1.</span> <span class="toc-text">AppConst</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-DebugMode"><span class="toc-number">1.1.</span> <span class="toc-text">AppConst.DebugMode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-UpdateMode"><span class="toc-number">1.2.</span> <span class="toc-text">AppConst.UpdateMode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-LuaBundleMode"><span class="toc-number">1.3.</span> <span class="toc-text">AppConst.LuaBundleMode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-AppName"><span class="toc-number">1.4.</span> <span class="toc-text">AppConst.AppName</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AppConst-DebugMode-和-AppConst-LuaBundleMode-的合作"><span class="toc-number">1.5.</span> <span class="toc-text">AppConst.DebugMode 和 AppConst.LuaBundleMode 的合作</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#内存优化"><span class="toc-number">1.</span> <span class="toc-text">内存优化</span></a></li></ol>
  
   </div>
 
